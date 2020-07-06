@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './App.css';
+import NavBar from './NavBar';
 import CardList from './CardList';
+import Scroll from './Scroll';
 import SearchBox from './SearchBox';
 
 class App extends Component {
@@ -10,9 +12,23 @@ class App extends Component {
     this.state = {
       test: [],
       test2: [],
-      searchfield: ''
+      searchfield: '',
+      dropdown: 'pokedexorder'
     };
   }
+
+
+componentDidMount() {
+    this.getallPokes();
+}
+
+onSearchChange = (event) => {
+  this.setState({searchfield: event.target.value});
+}
+
+onDropDownChange = (event) => {
+  this.setState({dropdown: event.target.value});
+}
 
 getallPokes() {
 
@@ -36,30 +52,55 @@ getallPokes() {
     );
 }
 
-
-componentDidMount() {
-    this.getallPokes();
-}
-
   render() {
 
-    const {test, test2} = this.state;
+    const {test, test2, searchfield, dropdown} = this.state;
 
-    //sort pokemon by id
-    const sorted = test2.sort(function(a,b) {
-      return (a.id - b.id);
-    });
+    //filter pokemon based on id and name
+    const filtered = test2.filter(poke => {
 
-    if(test.length === 0) {
-      return <h1>NO POKEMANS FOUND</h1>
+      if (!(isNaN(searchfield))) {
+        return poke.id.toString().includes(searchfield)
+      }
+
+      else {
+        return poke.name.toLowerCase().includes(searchfield.toLowerCase())
+      }
+
+    })
+
+    let sorted = [];
+
+    if(dropdown === 'pokedexorder') {
+      sorted = filtered.sort(function(a,b) {
+        return (a.id - b.id);
+      })
+    }
+
+    else if(dropdown === 'height') {
+      sorted = filtered.sort(function(a,b) {
+        return (a.height - b.height);
+      })
+    }
+
+    else if(dropdown === 'weight') {
+      sorted = filtered.sort(function(a,b) {
+        return (a.weight - b.weight);
+      })
+    }
+
+
+    if(test2.length === 0) {
+      return <h1 className="tc f1 dib white">Loading...</h1>
     }
 
     else { 
       return (
         <div className="tc">
-        <h1 className="tl f1 w-30 dib white">SimpleDex</h1>
-        <SearchBox />
+        <NavBar searchChange={this.onSearchChange} dropDownChange={this.onDropDownChange}/>
+        <Scroll>
           <CardList test = {sorted}/>
+        </Scroll>
         </div>
       );
     }

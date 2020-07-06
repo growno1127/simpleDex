@@ -4,7 +4,7 @@ import Card from './Card';
 const CardList = ({test}) =>
 {
 	//for each pokemon
-	//get id, name, front sprite, type(s)
+	//get id, name, front sprite, height, weight
 
 	return (
 			<div>

@@ -1,0 +1,21 @@
+#nav {
+	display: inline-block;
+	width: 100%;
+	list-style: none;
+	float: left;
+	margin: 0 0 0 0;
+	padding: 0;
+}
+
+#nav li {
+	display: inline-block;
+	float: left;
+	padding: 1em;
+}
+
+@media screen and (max-width: 740px) {
+	
+	#nav li {
+		float: none;
+	}
+}
