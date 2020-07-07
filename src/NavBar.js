@@ -10,7 +10,7 @@ const NavBar = ({searchChange, dropDownChange}) => {
               <ul id="nav">
 
               <div id="text">
-                <li><h1 className="white">SimpleDex</h1></li>
+                <li><h1 className="ml4 mr2 white">SimpleDex</h1></li>
               </div>
 
                 <div id="container">
